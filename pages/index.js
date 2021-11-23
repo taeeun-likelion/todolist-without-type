@@ -1,14 +1,8 @@
-import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { v1 } from "uuid";
 import axios from "axios";
 import Todo from "../components/Todo";
-export interface ITodoItem {
-  id: string;
-  content: string;
-  isCompleted: boolean;
-}
-const Home: NextPage = () => {
+const Home = () => {
   useEffect(() => {
     getTodoApi();
   }, []);
@@ -21,7 +15,7 @@ const Home: NextPage = () => {
       console.log(e);
     }
   };
-  const postTodoApi = async (todo: ITodoItem) => {
+  const postTodoApi = async (todo) => {
     try {
       const res = await axios.post("http://localhost:3000/api/todoapi", todo);
       const data = res.data;
@@ -30,12 +24,12 @@ const Home: NextPage = () => {
     }
   };
   const [todo, setTodo] = useState("");
-  const [todolist, setTodoList] = useState<ITodoItem[]>([]);
-  const onHandleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [todolist, setTodoList] = useState([]);
+  const onHandleInputChange = (e) => {
     setTodo(e.target.value);
   };
   const addTodo = () => {
-    const item: ITodoItem = {
+    const item = {
       id: v1(),
       content: todo,
       isCompleted: false,

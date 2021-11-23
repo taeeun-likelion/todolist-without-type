@@ -1,16 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import indexStyles from "../styles/index.module.css";
-import { ITodoItem } from "../pages";
-interface ITodo {
-  item: ITodoItem;
-  todolist: ITodoItem[];
-  setTodoList: any;
-}
-export default function Todo({ item, todolist, setTodoList }: ITodo) {
+export default function Todo({ item, todolist, setTodoList }) {
   const [newTodo, setNewTodo] = useState("");
   const [edit, setEdit] = useState(false);
-  const editTodoApi = async (id: string, newTodo: string) => {
+  const editTodoApi = async (id, newTodo) => {
     try {
       const res = axios.patch("http://localhost:3000/api/todoapi", {
         id: id,
@@ -21,7 +15,7 @@ export default function Todo({ item, todolist, setTodoList }: ITodo) {
       console.log(e);
     }
   };
-  const deleteTodoApi = async (id: string) => {
+  const deleteTodoApi = async (id) => {
     try {
       const res = axios.delete("http://localhost:3000/api/todoapi", {
         data: { id: id },
@@ -31,15 +25,15 @@ export default function Todo({ item, todolist, setTodoList }: ITodo) {
       console.log(e);
     }
   };
-  const onHandleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onHandleInputChange = (e) => {
     setNewTodo(e.target.value);
   };
-  const deleteTodo = (id: string) => {
+  const deleteTodo = (id) => {
     const newTodolist = todolist.filter((todo) => todo.id !== id);
     setTodoList(newTodolist);
     deleteTodoApi(id);
   };
-  const completeTodo = (id: string) => {
+  const completeTodo = (id) => {
     const newTodoList = todolist.map((todo) => ({
       ...todo,
       isCompleted: todo.id === id ? !todo.isCompleted : todo.isCompleted,
@@ -49,7 +43,7 @@ export default function Todo({ item, todolist, setTodoList }: ITodo) {
   const onEditTodoClick = () => {
     setEdit(!edit);
   };
-  const editTodo = (id: string) => {
+  const editTodo = (id) => {
     const newTodoList = todolist.map((item) => ({
       ...item,
       content: item.id === id ? newTodo : item.content,
