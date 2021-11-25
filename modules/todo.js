@@ -1,5 +1,7 @@
 import * as todoAPI from "../pages/api/todoapi";
 import { v1 } from "uuid";
+import axios from "axios";
+import { bindActionCreators } from "redux";
 
 //action type
 const GET_TODO = "GET_TODO";
@@ -10,7 +12,8 @@ const GET_TODO_FAIL = "GET_TODO_FAIL";
 export const getTodos = () => async (dispatch) => {
   dispatch({ type: GET_TODO });
   try {
-    const todos = await todoAPI.getTodos();
+    const req = await axios.get("http://localhost:3000/api/todoapi");
+    const todos = req.data;
     dispatch({ type: GET_TODO_SUCCESS, todos });
   } catch (e) {
     dispatch({ type: GET_TODO_FAIL, error: e });
