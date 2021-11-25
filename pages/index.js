@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { v1 } from "uuid";
 import axios from "axios";
 import Todo from "../components/Todo";
-import { getTodos } from "../modules/getTodo";
+import { getTodos, postTodos } from "../modules/thunks";
 const Home = () => {
   //const [todolist, setTodoList] = useState([]);
   const [todo, setTodo] = useState("");
@@ -31,8 +31,8 @@ const Home = () => {
       isCompleted: false,
     };
     if (todo) {
-      setTodoList([...todolist, item]);
-      postTodoApi(item);
+      //setTodoList([...todolist, item]);
+      dispatch(postTodos(item));
     }
     setTodo("");
   };

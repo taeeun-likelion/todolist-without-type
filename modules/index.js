@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
-import getTodo from "./getTodo";
-
-const rootReducer = combineReducers({ getTodo });
+import { getTodo, postTodo } from "./reducer";
+const rootReducer = combineReducers({ getTodo, postTodo });
 
 export default rootReducer;

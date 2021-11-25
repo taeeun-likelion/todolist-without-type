@@ -1,0 +1,45 @@
+import { v1 } from "uuid";
+import {
+  GET_TODO,
+  GET_TODO_SUCCESS,
+  GET_TODO_FAIL,
+  POST_TODO,
+  POST_TODO_SUCCESS,
+  POST_TODO_FAIL,
+} from "./actions";
+const initialTodo = [
+  {
+    id: v1(),
+    content: null,
+    isCompleted: false,
+  },
+];
+export function getTodo(state = initialTodo, action) {
+  switch (action.type) {
+    case GET_TODO:
+    case GET_TODO_SUCCESS:
+      //add todo
+      return {
+        ...state,
+        todos: action.todos,
+      };
+    case GET_TODO_FAIL:
+      return action.error;
+    default:
+      return state;
+  }
+}
+export function postTodo(state = initialTodo, action) {
+  switch (action.type) {
+    case POST_TODO:
+    case POST_TODO_SUCCESS:
+      return {
+        ...state,
+        todos: action.todos,
+      };
+    case POST_TODO_FAIL:
+      return action.error;
+    default:
+      return state;
+  }
+}
