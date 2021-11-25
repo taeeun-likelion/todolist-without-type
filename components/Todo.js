@@ -1,27 +1,16 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+import { delTodoThunk, editTodoThunk } from "../modules/thunks";
 import indexStyles from "../styles/index.module.css";
 export default function Todo({ item, todolist, setTodoList }) {
   const [newTodo, setNewTodo] = useState("");
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
-  const editTodoApi = async (id, newTodo) => {
-    try {
-      const res = axios.patch("http://localhost:3000/api/todoapi", {
-        id: id,
-        content: newTodo,
-      });
-      console.log(res);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   const onHandleInputChange = (e) => {
     setNewTodo(e.target.value);
   };
   const deleteTodo = (id) => {
-    dispatch(deleteTodo(id));
+    dispatch(delTodoThunk(id));
   };
   const completeTodo = (id) => {
     const newTodoList = todolist.map((todo) => ({
@@ -34,13 +23,8 @@ export default function Todo({ item, todolist, setTodoList }) {
     setEdit(!edit);
   };
   const editTodo = (id) => {
-    const newTodoList = todolist.map((item) => ({
-      ...item,
-      content: item.id === id ? newTodo : item.content,
-    }));
     if (newTodo) {
-      setTodoList(newTodoList);
-      editTodoApi(id, newTodo);
+      dispatch(editTodoThunk(id, newTodo));
     }
     setNewTodo("");
     setEdit(!edit);

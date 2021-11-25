@@ -9,7 +9,11 @@ import {
   DEL_TODO,
   DEL_TODO_SUCCESS,
   DEL_TODO_FAIL,
+  EDIT_TODO,
+  EDIT_TODO_SUCCESS,
+  EDIT_TODO_FAIL,
 } from "./actions";
+
 export const getTodoThunk = () => async (dispatch) => {
   dispatch({ type: GET_TODO });
   try {
@@ -24,7 +28,7 @@ export const getTodoThunk = () => async (dispatch) => {
 export const postTodoThunk = (todo) => async (dispatch) => {
   dispatch({ type: POST_TODO });
   try {
-    const res = axios.post("http://localhost:3000/api/todoapi", todo);
+    const res = await axios.post("http://localhost:3000/api/todoapi", todo);
     const todos = res.data;
     dispatch({ type: POST_TODO_SUCCESS, todos });
   } catch (e) {
@@ -35,10 +39,26 @@ export const postTodoThunk = (todo) => async (dispatch) => {
 export const delTodoThunk = (id) => async (dispatch) => {
   dispatch({ type: DEL_TODO });
   try {
-    const res = axios.delete("http://localhost:3000/api/todoapi", {
+    const res = await axios.delete("http://localhost:3000/api/todoapi", {
       data: { id: id },
     });
+    const todos = res.data;
+    dispatch({ type: DEL_TODO_SUCCESS, todos });
   } catch (e) {
     dispatch({ type: DEL_TODO_FAIL, error: e });
+  }
+};
+
+export const editTodoThunk = (id, todo) => async (dispatch) => {
+  dispatch({ type: EDIT_TODO });
+  try {
+    const res = await axios.patch("http://localhost:3000/api/todoapi", {
+      id: id,
+      content: todo,
+    });
+    const todos = res.data;
+    dispatch({ type: EDIT_TODO_SUCCESS, todos });
+  } catch (e) {
+    dispatch({ type: EDIT_TODO_FAIL, error: e });
   }
 };
