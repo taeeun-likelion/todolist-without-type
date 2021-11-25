@@ -6,6 +6,10 @@ let todo = [
   { id: v1(), content: "c", isCompleted: false },
 ];
 
+export const getTodos = async () => {
+  return todo;
+};
+
 export default function handler(req, res) {
   const { id, content, isCompleted } = req.body;
   switch (req.method) {

@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { v1 } from "uuid";
 import axios from "axios";
 import Todo from "../components/Todo";
+import { getTodos } from "../modules/todo";
 const Home = () => {
+  //const [todolist, setTodoList] = useState([]);
+  const [todo, setTodo] = useState("");
+  const todolist = useSelector((state) => state.todo.todos);
+  const dispatch = useDispatch();
   useEffect(() => {
-    getTodoApi();
-  }, []);
-  const getTodoApi = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/api/todoapi");
-      const data = res.data;
-      setTodoList(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    dispatch(getTodos());
+  }, [dispatch]);
   const postTodoApi = async (todo) => {
     try {
       const res = await axios.post("http://localhost:3000/api/todoapi", todo);
@@ -23,8 +20,7 @@ const Home = () => {
       console.log(e);
     }
   };
-  const [todo, setTodo] = useState("");
-  const [todolist, setTodoList] = useState([]);
+
   const onHandleInputChange = (e) => {
     setTodo(e.target.value);
   };
@@ -52,16 +48,18 @@ const Home = () => {
         <button onClick={() => addTodo()}>Add Todo</button>
       </header>
       <ul>
-        {todolist.map((item) => {
-          return (
-            <Todo
-              key={item.id}
-              item={item}
-              todolist={todolist}
-              setTodoList={setTodoList}
-            />
-          );
-        })}
+        {todolist && //undefined일 때  대비
+          todolist.map((item) => {
+            return (
+              // <Todo
+              //   key={item.id}
+              //   item={item}
+              //   todolist={todolist}
+              //   setTodoList={setTodoList}
+              // />
+              <div key={item.id}>{item.content}</div>
+            );
+          })}
       </ul>
     </>
   );
