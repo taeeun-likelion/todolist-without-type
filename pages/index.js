@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { v1 } from "uuid";
 import axios from "axios";
 import Todo from "../components/Todo";
-import { getTodos } from "../modules/todo";
+import { getTodos } from "../modules/getTodo";
 const Home = () => {
   //const [todolist, setTodoList] = useState([]);
   const [todo, setTodo] = useState("");
-  const todolist = useSelector((state) => state.todo.todos);
+  const todolist = useSelector((state) => state.getTodo.todos);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTodos());

@@ -1,7 +1,6 @@
 import * as todoAPI from "../pages/api/todoapi";
 import { v1 } from "uuid";
 import axios from "axios";
-import { bindActionCreators } from "redux";
 
 //action type
 const GET_TODO = "GET_TODO";
@@ -29,7 +28,7 @@ const initialTodo = [
   },
 ];
 //reducer
-export default function todo(state = initialTodo, action) {
+export default function getTodo(state = initialTodo, action) {
   switch (action.type) {
     case GET_TODO:
     case GET_TODO_SUCCESS:
@@ -38,6 +37,8 @@ export default function todo(state = initialTodo, action) {
         ...state,
         todos: action.todos,
       };
+    case GET_TODO_FAIL:
+      return action.error;
     default:
       return state;
   }
