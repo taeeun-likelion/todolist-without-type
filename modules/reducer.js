@@ -6,6 +6,9 @@ import {
   POST_TODO,
   POST_TODO_SUCCESS,
   POST_TODO_FAIL,
+  DEL_TODO,
+  DEL_TODO_SUCCESS,
+  DEL_TODO_FAIL,
 } from "./actions";
 const initialTodo = [
   {
@@ -32,6 +35,14 @@ export function todo(state = initialTodo, action) {
         todos: action.todos,
       };
     case POST_TODO_FAIL:
+      return action.error;
+    case DEL_TODO:
+    case DEL_TODO_SUCCESS:
+      return {
+        ...state,
+        todos: action.todos,
+      };
+    case DEL_TODO_FAIL:
       return action.error;
     default:
       return state;

@@ -40,15 +40,7 @@ const Home = () => {
       <ul>
         {todolist && //undefined일 때  대비
           todolist.map((item) => {
-            return (
-              // <Todo
-              //   key={item.id}
-              //   item={item}
-              //   todolist={todolist}
-              //   setTodoList={setTodoList}
-              // />
-              <div key={item.id}>{item.content}</div>
-            );
+            return <Todo key={item.id} item={item} />;
           })}
       </ul>
     </>
