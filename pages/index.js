@@ -1,26 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { v1 } from "uuid";
-import axios from "axios";
 import Todo from "../components/Todo";
-import { getTodos, postTodos } from "../modules/thunks";
+import { getTodoThunk, postTodoThunk } from "../modules/thunks";
 const Home = () => {
   //const [todolist, setTodoList] = useState([]);
   const [todo, setTodo] = useState("");
-  const todolist = useSelector((state) => state.getTodo.todos);
+  const todolist = useSelector((state) => state.todo.todos);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getTodos());
-  }, [dispatch]);
-  const postTodoApi = async (todo) => {
-    try {
-      const res = await axios.post("http://localhost:3000/api/todoapi", todo);
-      const data = res.data;
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
+    if (todolist) return;
+    dispatch(getTodoThunk());
+  }, [todolist, dispatch]);
   const onHandleInputChange = (e) => {
     setTodo(e.target.value);
   };
@@ -31,8 +22,7 @@ const Home = () => {
       isCompleted: false,
     };
     if (todo) {
-      //setTodoList([...todolist, item]);
-      dispatch(postTodos(item));
+      dispatch(postTodoThunk(item));
     }
     setTodo("");
   };

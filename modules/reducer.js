@@ -14,7 +14,7 @@ const initialTodo = [
     isCompleted: false,
   },
 ];
-export function getTodo(state = initialTodo, action) {
+export function todo(state = initialTodo, action) {
   switch (action.type) {
     case GET_TODO:
     case GET_TODO_SUCCESS:
@@ -25,12 +25,6 @@ export function getTodo(state = initialTodo, action) {
       };
     case GET_TODO_FAIL:
       return action.error;
-    default:
-      return state;
-  }
-}
-export function postTodo(state = initialTodo, action) {
-  switch (action.type) {
     case POST_TODO:
     case POST_TODO_SUCCESS:
       return {
