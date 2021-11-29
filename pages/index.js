@@ -4,22 +4,20 @@ import { v1 } from "uuid";
 import Todo from "../components/Todo";
 import { getTodoThunk, postTodoThunk } from "../modules/thunks";
 const Home = () => {
-  //const [todolist, setTodoList] = useState([]);
   const [todo, setTodo] = useState("");
-  const todolist = useSelector((state) => state.todo.todos);
+  const todolist = useSelector((state) => state.todo);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (todolist) return;
     dispatch(getTodoThunk());
-  }, [todolist, dispatch]);
+  }, [dispatch]);
   const onHandleInputChange = (e) => {
     setTodo(e.target.value);
   };
   const addTodo = () => {
     const item = {
       id: v1(),
-      content: todo,
-      isCompleted: false,
+      title: todo,
+      completed: false,
     };
     if (todo) {
       dispatch(postTodoThunk(item));
@@ -40,16 +38,10 @@ const Home = () => {
       <ul>
         {todolist && //undefined일 때  대비
           todolist.map((item) => {
-            return <Todo key={item.id} item={item} />;
+            return <Todo key={item.id} item={item} todolist={todolist} />;
           })}
       </ul>
     </>
   );
 };
-// export async function getStaticProps() {
-//   const res = await axios.get("http://localhost:3000/api/todoapi");
-//   const data = await res.data;
-//   console.log(res, data);
-//   return { props: { data } };
-// }
 export default Home;

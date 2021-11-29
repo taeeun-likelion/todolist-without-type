@@ -20,7 +20,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/_app.js",
-    "pages/api/todoapi.js",
+    "pages/api/todo/todoapi.js",
     "components/Todo.js",
     "pages/index.js"
   ],

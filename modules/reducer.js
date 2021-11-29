@@ -12,31 +12,28 @@ import {
   EDIT_TODO,
   EDIT_TODO_SUCCESS,
   EDIT_TODO_FAIL,
+  COMPLETE_TODO,
+  COMPLETE_TODO_SUCCESS,
+  COMPLETE_TODO_FAIL,
 } from "./actions";
 const initialTodo = [
   {
-    id: v1(),
-    content: null,
-    isCompleted: false,
+    id: 0,
+    title: "initial todo",
+    completed: false,
   },
 ];
 export function todo(state = initialTodo, action) {
   switch (action.type) {
     case GET_TODO:
+      return state;
     case GET_TODO_SUCCESS:
-      //add todo
-      return {
-        ...state,
-        todos: action.todos,
-      };
+      return state.concat(action.todos);
     case GET_TODO_FAIL:
       return action.error;
-    case POST_TODO:
+    //case POST_TODO:
     case POST_TODO_SUCCESS:
-      return {
-        ...state,
-        todos: action.todos,
-      };
+      return state.concat(action.todos);
     case POST_TODO_FAIL:
       return action.error;
     case DEL_TODO:
@@ -55,6 +52,12 @@ export function todo(state = initialTodo, action) {
       };
     case EDIT_TODO_FAIL:
       return action.error;
+    case COMPLETE_TODO:
+    case COMPLETE_TODO_SUCCESS:
+      return {
+        ...state,
+        todos: action.todos,
+      };
     default:
       return state;
   }

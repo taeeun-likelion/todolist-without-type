@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { delTodoThunk, editTodoThunk } from "../modules/thunks";
+import {
+  completeTodoThunk,
+  delTodoThunk,
+  editTodoThunk,
+} from "../modules/thunks";
 import indexStyles from "../styles/index.module.css";
-export default function Todo({ item, todolist, setTodoList }) {
+export default function Todo({ item }) {
+  const { id, title, completed } = item;
   const [newTodo, setNewTodo] = useState("");
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
@@ -13,11 +18,7 @@ export default function Todo({ item, todolist, setTodoList }) {
     dispatch(delTodoThunk(id));
   };
   const completeTodo = (id) => {
-    const newTodoList = todolist.map((todo) => ({
-      ...todo,
-      isCompleted: todo.id === id ? !todo.isCompleted : todo.isCompleted,
-    }));
-    setTodoList(newTodoList);
+    dispatch(completeTodoThunk(id));
   };
   const onEditTodoClick = () => {
     setEdit(!edit);
@@ -38,17 +39,15 @@ export default function Todo({ item, todolist, setTodoList }) {
           onChange={onHandleInputChange}
         />
       ) : (
-        <li className={item.isCompleted ? indexStyles.completed : ""}>
-          {item.content}
-        </li>
+        <li className={completed ? indexStyles.completed : ""}>{title}</li>
       )}
-      <button onClick={() => deleteTodo(item.id)}>Delete Todo</button>
+      <button onClick={() => deleteTodo(id)}>Delete Todo</button>
       {edit ? (
-        <button onClick={() => editTodo(item.id)}>Edit</button>
+        <button onClick={() => editTodo(id)}>Edit</button>
       ) : (
         <button onClick={() => onEditTodoClick()}>Edit Todo</button>
       )}
-      <button onClick={() => completeTodo(item.id)}>Completed</button>
+      <button onClick={() => completeTodo(id)}>Completed</button>
     </div>
   );
 }
