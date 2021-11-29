@@ -73,9 +73,10 @@ export const editTodoThunk = (id, todo) => async (dispatch) => {
 export const completeTodoThunk = (id) => async (dispatch) => {
   dispatch({ type: COMPLETE_TODO });
   try {
-    const todos = await todoAPI.completeTodo(id);
-    dispatch({ type: COMPLETE_TODO_SUCCESS, todos });
-    console.log(todos);
+    await axios.patch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+      id: id,
+    });
+    dispatch({ type: COMPLETE_TODO_SUCCESS, id });
   } catch (e) {
     dispatch({ type: COMPLETE_TODO_FAIL, error: e });
   }

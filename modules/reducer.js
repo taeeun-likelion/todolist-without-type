@@ -1,4 +1,3 @@
-import { v1 } from "uuid";
 import {
   GET_TODO,
   GET_TODO_SUCCESS,
@@ -29,6 +28,7 @@ export function todo(state = initialTodo, action) {
     case POST_TODO:
     case DEL_TODO:
     case EDIT_TODO:
+    case COMPLETE_TODO:
       return state;
     case GET_TODO_SUCCESS:
       return state.concat(action.todos);
@@ -49,12 +49,13 @@ export function todo(state = initialTodo, action) {
       }));
     case EDIT_TODO_FAIL:
       return action.error;
-    case COMPLETE_TODO:
     case COMPLETE_TODO_SUCCESS:
-      return {
-        ...state,
-        todos: action.todos,
-      };
+      return state.map((item) => ({
+        ...item,
+        completed: item.id === action.id ? !item.completed : item.completed,
+      }));
+    case COMPLETE_TODO_FAIL:
+      return action.error;
     default:
       return state;
   }
