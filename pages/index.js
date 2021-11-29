@@ -6,7 +6,6 @@ import { getTodoThunk, postTodoThunk } from "../modules/thunks";
 const Home = () => {
   const [todo, setTodo] = useState("");
   const todolist = useSelector((state) => state.todo);
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTodoThunk());

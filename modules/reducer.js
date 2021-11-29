@@ -43,10 +43,10 @@ export function todo(state = initialTodo, action) {
     case DEL_TODO_FAIL:
       return action.error;
     case EDIT_TODO_SUCCESS:
-      return {
-        ...state,
-        todos: action.todos,
-      };
+      return state.map((item) => ({
+        ...item,
+        title: item.id === action.todos.id ? action.todos.title : item.title,
+      }));
     case EDIT_TODO_FAIL:
       return action.error;
     case COMPLETE_TODO:
