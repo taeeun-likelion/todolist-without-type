@@ -35,7 +35,6 @@ export const postTodoThunk = (todo) => async (dispatch) => {
       todo
     );
     const todos = res.data;
-    //console.log(todos);
     dispatch({ type: POST_TODO_SUCCESS, todos });
   } catch (e) {
     dispatch({ type: POST_TODO_FAIL, error: e });
@@ -45,11 +44,13 @@ export const postTodoThunk = (todo) => async (dispatch) => {
 export const delTodoThunk = (id) => async (dispatch) => {
   dispatch({ type: DEL_TODO });
   try {
-    const res = await axios.delete(`http://localhost:3000/api/todo/${id}`, {
-      data: { id: id },
-    });
-    const todos = res.data;
-    dispatch({ type: DEL_TODO_SUCCESS, todos });
+    const res = await axios.delete(
+      `https://jsonplaceholder.typicode.com/todos/${id}`,
+      {
+        data: { id: id },
+      }
+    );
+    dispatch({ type: DEL_TODO_SUCCESS, id });
   } catch (e) {
     dispatch({ type: DEL_TODO_FAIL, error: e });
   }

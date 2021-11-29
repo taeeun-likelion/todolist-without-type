@@ -26,25 +26,22 @@ const initialTodo = [
 export function todo(state = initialTodo, action) {
   switch (action.type) {
     case GET_TODO:
+    case POST_TODO:
+    case DEL_TODO:
+    case EDIT_TODO:
       return state;
     case GET_TODO_SUCCESS:
       return state.concat(action.todos);
     case GET_TODO_FAIL:
       return action.error;
-    //case POST_TODO:
     case POST_TODO_SUCCESS:
       return state.concat(action.todos);
     case POST_TODO_FAIL:
       return action.error;
-    case DEL_TODO:
     case DEL_TODO_SUCCESS:
-      return {
-        ...state,
-        todos: action.todos,
-      };
+      return state.filter((item) => item.id !== action.id);
     case DEL_TODO_FAIL:
       return action.error;
-    case EDIT_TODO:
     case EDIT_TODO_SUCCESS:
       return {
         ...state,
